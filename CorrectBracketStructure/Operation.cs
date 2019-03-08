@@ -10,9 +10,9 @@ namespace CorrectBracketStructure
     {
         public bool CheckupFunction(string s)
         {
-            if (s[0] == ')' || s[s.Length - 1] == '(') { return false; }
             int count = 0;
-            for(int i = 0; i< s.Length; i++)
+            int temp = 0;
+            for (int i = 0; i < s.Length; i++)
             {
                 if (s[i] == '(')
                 {
@@ -22,8 +22,15 @@ namespace CorrectBracketStructure
                 {
                     count--;
                 }
+
+                if (temp == 0 && count == -1)
+                {
+                    return false;
+                }
+                temp = count;
             }
-            return count != 0 ? false : true; 
+                return count != 0 ? false : true;
+            }
         }
-    }
 }
+

@@ -11,12 +11,13 @@ namespace CorrectBracketStructure
 
     class Test
     {
-        Operation operation = new Operation();
+        Operation operation = new Operation(); 
 
         [Test]
         [Description("Verifies that checkup function works correct.")]
         [TestCase("()", true)]
         [TestCase("(())", true)]
+        [TestCase("(()(()))", true)]
         [TestCase("((((()))))", true)]
         [TestCase("(((((((((((())))))))))))", true)]
         [TestCase("(((()()()(())(())((((()))))())))", true)]
@@ -25,7 +26,9 @@ namespace CorrectBracketStructure
         [TestCase(")", false)]
         [TestCase(")(", false)]
         [TestCase(")()(", false)]
-        [TestCase("(()(()))", true)]
+        [TestCase("()))((()", false)]
+        [TestCase("())))(((()", false)]
+        [TestCase("()))((()))((()))((()", false)]
         [TestCase("))()())((((())))(((((", false)]
         [TestCase(")()(()()(()))())()())(()()()()())(()", false)]
         [TestCase(")(()))(()())()))()())()))))))(((())())()()())", false)]
