@@ -10,7 +10,7 @@ namespace CorrectBracketStructure
     {
         static void Main(string[] args)
         {
-
+          
         }
     }
 }
