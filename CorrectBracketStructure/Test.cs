@@ -121,7 +121,7 @@ namespace LotusFlareTasks
         }
 
         [Test, TestCaseSource(nameof(_testPairs))]
-        public void TestPairsMethod1(int[] array, Dictionary<int, int> expected_pairs, int Number)
+        public void TestPairsMethod1(Int64[] array, Dictionary<Int64, Int64> expected_pairs, Int64 Number)
         {
             var result = operation.FindPairsMethodOne(array, Number);
             Assert.IsTrue(operation.DictionaryCompare(expected_pairs, result));
@@ -129,7 +129,7 @@ namespace LotusFlareTasks
 
 
         [Test, TestCaseSource(nameof(_testPairs))]
-        public void TestPairsMethod2(int[] array, Dictionary<int, int> expected_pairs, int Number)
+        public void TestPairsMethod2(Int64[] array, Dictionary<Int64, Int64> expected_pairs, int Number)
         {
             var result = operation.FindPairsMethodTwo(array, Number);
             Assert.IsTrue(operation.DictionaryCompare(expected_pairs, result));

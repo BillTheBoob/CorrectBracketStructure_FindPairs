@@ -31,9 +31,9 @@ namespace LotusFlareTasks
         }
 
 
-        public Dictionary<int, int> AllProducts(int N)
+        public Dictionary<Int64, Int64> AllProducts(Int64 N)
         {
-            Dictionary<int, int> product = new Dictionary<int, int> { };
+            Dictionary<Int64, Int64> product = new Dictionary<Int64, Int64> { };
             for (int i = 1; i <= Math.Sqrt(N); i++)
             {
                 if (N % i == 0)
@@ -45,18 +45,18 @@ namespace LotusFlareTasks
         }
 
 
-        public int[] MergeSort(int[] array, int start, int end)
+        public Int64[] MergeSort(Int64[] array, int start, int end)
         {
             if(end - start < 2)
             {
-                return new int[] { array[start] };
+                return new Int64[] { array[start] };
             }
 
             int middle = start + ((end - start) / 2);
-            int[] left = MergeSort(array, start, middle);
-            int[] right = MergeSort(array, middle, end);
+            Int64[] left = MergeSort(array, start, middle);
+            Int64[] right = MergeSort(array, middle, end);
 
-            int[] result = new int[left.Length + right.Length];
+            Int64[] result = new Int64[left.Length + right.Length];
 
             int idxL = 0;
             int idxR = 0;
@@ -89,7 +89,7 @@ namespace LotusFlareTasks
         }
 
 
-        public int UpperBound(int[] array, int Number)
+        public int UpperBound(Int64[] array, Int64 Number)
         {
             int i = array.Length - 1;
             while(array[i] > Number)
@@ -100,7 +100,7 @@ namespace LotusFlareTasks
         }
 
 
-        public int BinarySearch(int[] array, int upper_bound, int key)
+        public int BinarySearch(Int64[] array, int upper_bound, Int64 key)
         {
             int min = 0;
             int max = upper_bound;
@@ -124,13 +124,13 @@ namespace LotusFlareTasks
         }
 
 
-        public Dictionary<int, int> FindPairsMethodOne(int[] array, int Number)
+        public Dictionary<Int64, Int64> FindPairsMethodOne(Int64[] array, Int64 Number)
         {
             array = MergeSort(array, 0, array.Length);
             var upper_bound = UpperBound(array, Number);
             var all_pairs = AllProducts(Number);
 
-            var result = new Dictionary<int, int> { };
+            var result = new Dictionary<Int64, Int64> { };
             foreach (var entry in all_pairs)
             {
                 var key = entry.Key;
@@ -159,10 +159,10 @@ namespace LotusFlareTasks
         }
 
 
-        public Dictionary<int, int> FindPairsMethodTwo(int[] array, int Number)
+        public Dictionary<Int64, Int64> FindPairsMethodTwo(Int64[] array, Int64 Number)
         {
             array = array.Distinct().ToArray();
-            var result = new Dictionary<int, int> { };
+            var result = new Dictionary<Int64, Int64> { };
             for(int i = 0; i < array.Length; i++)
             {
                 for(int j = i; j < array.Length; j++)
