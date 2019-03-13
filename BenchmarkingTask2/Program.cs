@@ -13,7 +13,7 @@ namespace BenchmarkingTask2
     [MemoryDiagnoser]
     public class Task2
     {
-        public Random rnd = new Random();
+
         /*
         public int[] test_array_1 = new int[]
         {
@@ -46,31 +46,16 @@ namespace BenchmarkingTask2
         */
 
 
-        public Int64[] random_array_with_divisors(int size, Dictionary<Int64, Int64> divisors)
-        {
-            Int64[] temp = new Int64[size];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                temp[i] = rnd.Next();
-            }
-
-            foreach (var pair in divisors)
-            {
-                temp[rnd.Next(0, temp.Length)] = pair.Key;
-            }
-            foreach (var pair in divisors)
-            {
-                temp[rnd.Next(0, temp.Length)] = pair.Value;
-            }
-            return temp;
-        }
-
+        public static Operation operation = new Operation();
+        
+        public Int64[] random_array1 = operation.random_array_with_divisors(1200, operation.AllProducts(8100));
+        public Int64[] random_array2 = operation.random_array_with_divisors(200, operation.AllProducts(4294567296));
 
         [Benchmark]
         public void FindDivisors_1()
         {
             Operation operation = new Operation();
-            var result = operation.FindPairsMethodOne(random_array_with_divisors(1200, operation.AllProducts(8100)), 8100);
+            var result = operation.FindPairsMethodOne(random_array1, 8100);
             Debug.WriteLine(result);
         }
 
@@ -78,7 +63,7 @@ namespace BenchmarkingTask2
         public void FindDivisors_2()
         {
             Operation operation = new Operation();
-            var result = operation.FindPairsMethodOne(random_array_with_divisors(200, operation.AllProducts(4294567296)), 4294567296);
+            var result = operation.FindPairsMethodOne(random_array2, 4294567296);
             Debug.WriteLine(result);
         }
 
@@ -86,7 +71,7 @@ namespace BenchmarkingTask2
         public void BruteForce1()
         {
             Operation operation = new Operation();
-            var result = operation.FindPairsMethodTwo(random_array_with_divisors(1200, operation.AllProducts(8100)), 8100);
+            var result = operation.FindPairsMethodTwo(random_array1, 8100);
             Debug.WriteLine(result);
         }
 
@@ -94,7 +79,7 @@ namespace BenchmarkingTask2
         public void BruteForce2()
         {
             Operation operation = new Operation();
-            var result = operation.FindPairsMethodTwo(random_array_with_divisors(200, operation.AllProducts(4294567296)), 4294567296);
+            var result = operation.FindPairsMethodTwo(random_array2, 4294567296);
             Debug.WriteLine(result);
         }
     }

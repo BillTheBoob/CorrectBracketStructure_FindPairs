@@ -159,6 +159,30 @@ namespace LotusFlareTasks
         }
 
 
+        public Int64[] random_array_with_divisors(int size, Dictionary<Int64, Int64> divisors)
+        {
+            Random rnd = new Random();
+
+            Int64[] temp = new Int64[size];
+            for (int i = 0; i < temp.Length; i++)
+            {
+                temp[i] = rnd.Next();
+            }
+
+            foreach (var pair in divisors)
+            {
+                temp[rnd.Next(0, temp.Length)] = pair.Key;
+            }
+            foreach (var pair in divisors)
+            {
+                temp[rnd.Next(0, temp.Length)] = pair.Value;
+            }
+
+            temp = temp.Distinct().ToArray();
+            return temp;
+        }
+
+
         public Dictionary<Int64, Int64> FindPairsMethodTwo(Int64[] array, Int64 Number)
         {
             array = array.Distinct().ToArray();
