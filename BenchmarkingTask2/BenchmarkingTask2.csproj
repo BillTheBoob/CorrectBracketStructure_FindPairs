@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CorrectBracketStructure\LFT.csproj" />
+    <ProjectReference Include="..\Solutions\LFT.csproj" />
   </ItemGroup>
 
 </Project>
