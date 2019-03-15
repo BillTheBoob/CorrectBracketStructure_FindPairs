@@ -10,24 +10,28 @@ namespace LotusFlareTasks
     {
         public bool CheckCorrectBracketStructure(string s)
         {
-            int count = 0;
+            var temp = new Stack<char>();
+            var dict = new Dictionary<char, char> { { '(', ')' }, { '[', ']' }, { '{', '}' } };
+
             for (int i = 0; i < s.Length; i++)
             {
-                if (s[i] == '(')
+                if (s[i] == '(' || s[i] == '[' || s[i] == '{')
                 {
-                    count++;
+                    temp.Push(s[i]);
                 }
                 else
                 {
-                    count--;
-                }
-
-                if (count < 0)
-                {
-                    return false;
+                    if (temp.Count != 0 && dict[temp.Peek()] == s[i])
+                    {
+                        temp.Pop();
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
-                return count != 0 ? false : true;
+            return temp.Count != 0 ? false : true;
         }
 
 
@@ -38,7 +42,7 @@ namespace LotusFlareTasks
             {
                 if (N % i == 0)
                 {
-                    product.Add(i, N/i);
+                    product.Add(i, N / i);
                 }
             }
             return product;
@@ -47,7 +51,7 @@ namespace LotusFlareTasks
 
         public Int64[] MergeSort(Int64[] array, int start, int end)
         {
-            if(end - start < 2)
+            if (end - start < 2)
             {
                 return new Int64[] { array[start] };
             }
@@ -62,9 +66,9 @@ namespace LotusFlareTasks
             int idxR = 0;
             int i = 0;
 
-            for(; idxL < left.Length && idxR < right.Length; i++)
+            for (; idxL < left.Length && idxR < right.Length; i++)
             {
-                if(left[idxL] < right[idxR])
+                if (left[idxL] < right[idxR])
                 {
                     result[i] = left[idxL];
                     idxL++;
@@ -76,7 +80,7 @@ namespace LotusFlareTasks
                 }
             }
 
-            while(idxL < left.Length)
+            while (idxL < left.Length)
             {
                 result[i++] = left[idxL++];
             }
@@ -92,7 +96,7 @@ namespace LotusFlareTasks
         public int UpperBound(Int64[] array, Int64 Number)
         {
             int i = array.Length - 1;
-            while(array[i] > Number)
+            while (array[i] > Number)
             {
                 i--;
             }
@@ -124,6 +128,11 @@ namespace LotusFlareTasks
         }
 
 
+        /*
+            Метод принимает на вход массив и заданное число. 
+            После чего находятся все делители заданного числа. 
+            Массив сортируется, после чего идет бинарный поиск делителей в массиве.
+        */
         public Dictionary<Int64, Int64> FindPairsMethodOne(Int64[] array, Int64 Number)
         {
             array = MergeSort(array, 0, array.Length);
@@ -135,7 +144,7 @@ namespace LotusFlareTasks
             {
                 var key = entry.Key;
                 var value = entry.Value;
-                if(BinarySearch(array, upper_bound, key) != 0 && BinarySearch(array, upper_bound, value) != 0 )
+                if (BinarySearch(array, upper_bound, key) != 0 && BinarySearch(array, upper_bound, value) != 0)
                 {
                     result.Add(key, value);
                 }
@@ -143,10 +152,10 @@ namespace LotusFlareTasks
             return result;
         }
 
-        
-        public bool DictionaryCompare(Dictionary<int, int> d1, Dictionary<int, int> d2)
+
+        public bool DictionaryCompare(Dictionary<Int64, Int64> d1, Dictionary<Int64, Int64> d2)
         {
-            if(d1.Count != d2.Count)
+            if (d1.Count != d2.Count)
             {
                 return false;
             }
@@ -158,6 +167,20 @@ namespace LotusFlareTasks
             return true;
         }
 
+
+        public bool IsDuplicate(int tmp, int[] array)
+        {
+            foreach (var item in array)
+            {
+                if (item == tmp)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public Int64[] random_array_with_divisors(int size, Dictionary<Int64, Int64> divisors)
         {
             Random rnd = new Random();
@@ -168,27 +191,46 @@ namespace LotusFlareTasks
                 temp[i] = rnd.Next();
             }
 
+            int[] divisors_indexes = new int[divisors.Count << 1];
+
+            for (int i = 0; i < divisors_indexes.Length; i++)
+            {
+                var tmp = rnd.Next(0, temp.Length);
+                while (IsDuplicate(tmp, divisors_indexes))
+                {
+                    tmp = rnd.Next(0, temp.Length);
+                }
+                divisors_indexes[i] = tmp;
+            }
+
+            int k = 0;
             foreach (var pair in divisors)
             {
-                temp[rnd.Next(0, temp.Length)] = pair.Key;
+                temp[divisors_indexes[k]] = pair.Key;
+                temp[divisors_indexes[k + 1]] = pair.Value;
+                k += 2;
             }
-            foreach (var pair in divisors)
-            {
-                temp[rnd.Next(0, temp.Length)] = pair.Value;
-            }
+
+
 
             temp = temp.Distinct().ToArray();
             return temp;
         }
 
+
+        /*
+             Метод принимает на вход массив и заданное число. 
+             После чего с помощью двух циклов происходит переумножение всех чисел и 
+             проверяется, является ли результат заданым числом. 
+        */
         public Dictionary<Int64, Int64> FindPairsMethodTwo(Int64[] array, Int64 Number)
         {
             var result = new Dictionary<Int64, Int64> { };
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                for(int j = i; j < array.Length; j++)
+                for (int j = i; j < array.Length; j++)
                 {
-                    if(array[i] * array[j] == Number)
+                    if (array[i] * array[j] == Number)
                     {
                         if (array[i] < array[j])
                         {
@@ -205,4 +247,5 @@ namespace LotusFlareTasks
         }
     }
 }
+
 
